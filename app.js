@@ -6,6 +6,8 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate'); 
 const wrapAsync = require('./utils/wrapAsync.js');
 const ExpressError = require('./utils/ExpressError.js');
+const session = require('express-session');
+const flash = require('connect-flash');
 
 const listings = require('./routes/listing.js');
 const reviews = require('./routes/review.js');
@@ -37,8 +39,28 @@ async function main() {
 
 
 //express part
+//root route
 app.get('/',(req,res)=>{
     res.send("Hi, I am root");
+});
+
+
+//session 
+app.use(session({
+    secret: "mySuperSecretKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 7 * 24 * 60 * 60 * 1000, //keeps session for 7days
+        httpOnly: true
+    }
+}));
+app.use(flash());
+
+app.use((req, res, next)=>{
+    //flash mai "success" agar aata hai to usko res.locals mai save kardo
+    res.locals.success = req.flash("success");
+    next();
 });
 
 //listing routes
@@ -61,6 +83,7 @@ app.use((err, req, res, next)=>{
     res.status(statusCode).render('error.ejs',{message});
     // res.status(statusCode).send(message);
 });
+
 
 app.listen(port, ()=>{
     console.log(`app is running at ${port}`);
