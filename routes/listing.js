@@ -16,7 +16,7 @@ const validateListing = (req, res, next) => {
     }
 }
 
-//index route
+//listing route
 router.get('/',wrapAsync(async (req,res)=>{
     let allListing = await Listing.find({});
     res.render("listing/index.ejs",{allListing});
@@ -39,6 +39,10 @@ router.get('/new', (req,res)=>{
 router.get('/:id', wrapAsync(async (req, res)=>{
     let {id} = req.params;
     let listing = await Listing.findById(id).populate('reviews');
+    if(!listing){
+        req.flash("error", "Requested listing does not exist");
+        return res.redirect("/listing");
+    }
     res.render('listing/show.ejs',{listing});
 }));
 
@@ -46,6 +50,10 @@ router.get('/:id', wrapAsync(async (req, res)=>{
 router.get('/:id/edit', wrapAsync(async (req,res)=>{
     let {id} = req.params;
     let listing = await Listing.findById(id);
+    if(!listing){
+        req.flash("error", "Requested listing does not exist");
+        return res.redirect("/listing");
+    }
     res.render('listing/edit.ejs',{listing});
 }));
 

@@ -60,6 +60,7 @@ app.use(flash());
 app.use((req, res, next)=>{
     //flash mai "success" agar aata hai to usko res.locals mai save kardo
     res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
     next();
 });
 
