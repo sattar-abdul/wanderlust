@@ -9,8 +9,13 @@ const ExpressError = require('./utils/ExpressError.js');
 const session = require('express-session');
 const flash = require('connect-flash');
 
-const listings = require('./routes/listing.js');
-const reviews = require('./routes/review.js');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user.js');
+
+const listingRouter = require('./routes/listing.js');
+const reviewRouter = require('./routes/review.js');
+const userRouter = require('./routes/user.js');
 
 const app = express();
 const port = 3000;
@@ -45,7 +50,7 @@ app.get('/',(req,res)=>{
 });
 
 
-//session 
+//session- a session Id will be created for each user
 app.use(session({
     secret: "mySuperSecretKey",
     resave: false,
@@ -56,6 +61,18 @@ app.use(session({
     }
 }));
 app.use(flash());
+     
+
+//authentication
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate())); // uses the strategy from passport-local-mongoose
+
+// use static serialize and deserialize of model for passport session support
+passport.serializeUser(User.serializeUser()); //saves user data from session
+passport.deserializeUser(User.deserializeUser()); //removes user data from session
+
 
 app.use((req, res, next)=>{
     //flash mai "success" agar aata hai to usko res.locals mai save kardo
@@ -64,12 +81,26 @@ app.use((req, res, next)=>{
     next();
 });
 
+//demo
+// app.use("/demouser", async (req,res) =>{
+//     let fakeuser = new User({
+//         email: "student1@gmail.com",
+//         username: "student1"
+//     });
+
+//     let registeredUser = await User.register(fakeuser, "helloworld");
+//     res.send(registeredUser);
+// });
+
 //listing routes
-app.use('/listing', listings);
+app.use('/listing', listingRouter);
 
 
 //review routes
-app.use('/listing/:id/reviews', reviews);
+app.use('/listing/:id/reviews', reviewRouter);
+
+//user routes
+app.use('/', userRouter);
 
 
 //page not found
