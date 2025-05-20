@@ -53,7 +53,7 @@ body {
     background-color: #f2f1f1;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: space-evenly;
+    align-items: center;
     text-align: center;
 }
 

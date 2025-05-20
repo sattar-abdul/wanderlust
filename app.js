@@ -75,9 +75,10 @@ passport.deserializeUser(User.deserializeUser()); //removes user data from sessi
 
 
 app.use((req, res, next)=>{
-    //flash mai "success" agar aata hai to usko res.locals mai save kardo
+    //saving some info to res.locals so that we can access it on ejs files
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
+    res.locals.currUser = req.user;
     next();
 });
 
