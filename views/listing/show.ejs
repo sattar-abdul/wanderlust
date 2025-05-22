@@ -43,20 +43,22 @@
             <!-- add review -->
             <div class="col-8 offset-3 mb-3">
                 <hr>
-                <h4> Leave a Review</h4>
-                <form method="post" action="/listing/<%=listing.id%>/reviews" class="needs-validation" novalidate>
-                    <div class="mb-3 mt-3">
-                        <label for="rating" class="form-label"> Rating </label>
-                        <input type="range" min="1" max="5" id="rating" name="reviews[rating]" class="form-range">
-                    </div>
-                    <div class="mb-3">
-                        <label for="comment" class="form-label"> Comment </label>
-                        <textarea id="comment" name="reviews[comment]" class="form-control" required></textarea>
-                        <div class="invalid-feedback">Comment cannot be empty</div>
-                    </div>
-                    <button class="btn btn-outline-dark"> Submit </button>
-                </form> 
-                <hr>
+                <% if(currUser){ %>
+                    <h4> Leave a Review</h4>
+                    <form method="post" action="/listing/<%=listing.id%>/reviews" class="needs-validation" novalidate>
+                        <div class="mb-3 mt-3">
+                            <label for="rating" class="form-label"> Rating </label>
+                            <input type="range" min="1" max="5" id="rating" name="reviews[rating]" class="form-range">
+                        </div>
+                        <div class="mb-3">
+                            <label for="comment" class="form-label"> Comment </label>
+                            <textarea id="comment" name="reviews[comment]" class="form-control" required></textarea>
+                            <div class="invalid-feedback">Comment cannot be empty</div>
+                        </div>
+                        <button class="btn btn-outline-dark"> Submit </button>
+                    </form> 
+                    <hr>
+                <% } %>
 
                 <!-- reviews -->
                 <div>
@@ -66,7 +68,7 @@
                         <% for(review of listing.reviews) { %>
                             
                             <div class="card col-5 mb-3 ms-3">
-                                <h5 class="card-title"> Jane Lavinson</h5>
+                                <h5 class="card-title"> <%=review.author.username%> </h5>
                                 <p class="card-text"><%=review.comment%></p>
                                 <p class="card-text"><%=review.rating%> Star</p>
                                 <form class="mb-3" method="post" action="/listing/<%=listing._id%>/reviews/<%=review._id%>?_method=DELETE">

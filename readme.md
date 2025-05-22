@@ -12,3 +12,7 @@ It's a npm library used for data validation in JS.
 
 # For authentication: 
 `passport`, `passport-local` libraries are used using local strategy.
+
+# Already existing user:
+1. username: student2 pass: hello
+2. username: student4 pass: hello

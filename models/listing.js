@@ -28,6 +28,7 @@ const listingSchema = new Schema({
     }
 });
 
+//All the reviwes gets deleted if listing is deleted
 listingSchema.post('findOneAndDelete', async (listing) =>{
     if (listing){
         await Review.deleteMany({_id: {$in: listing.reviews}});
