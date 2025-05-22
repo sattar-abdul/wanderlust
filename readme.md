@@ -20,3 +20,9 @@ It's a npm library used for data validation in JS.
 
 ## Framework used:
 we have used MVC (Model-View-Controller) Framework
+
+## For rating and its animation:
+we used open source code: LunarLogic starability
+
+## For img upload and handling
+We used npm package "multer" and form of type "multipart/form-data"
