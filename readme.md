@@ -2,7 +2,7 @@ Documentation
 
 # To initilize this project with some data, Run:
 1. /init/index.js
-2. /init/initReview.js
+2. /init/initReview.js (needs to update)
 
 # Already existing user (for testing):
 1. username: student2 pass: hello
@@ -26,3 +26,7 @@ we used open source code: LunarLogic starability
 
 ## For img upload and handling
 We used npm package "multer" and form of type "multipart/form-data"
+
+## For img storage
+used cloud service: cloudinary along with its packages
+.env to store credentials.

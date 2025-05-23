@@ -1,67 +1,67 @@
+if (process.env.NODE_ENV != "production") {
+  require("dotenv").config();
+}
+
 const express = require("express");
 const mongoose = require("mongoose");
-const MONGO_URL = 'mongodb://127.0.0.1:27017/wanderlust';
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const path = require("path");
-const methodOverride = require('method-override');
-const ejsMate = require('ejs-mate'); 
-const wrapAsync = require('./utils/wrapAsync.js');
-const ExpressError = require('./utils/ExpressError.js');
-const session = require('express-session');
-const flash = require('connect-flash');
+const methodOverride = require("method-override");
+const ejsMate = require("ejs-mate");
+const ExpressError = require("./utils/ExpressError.js");
+const session = require("express-session");
+const flash = require("connect-flash");
 
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
-const User = require('./models/user.js');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
-const listingRouter = require('./routes/listing.js');
-const reviewRouter = require('./routes/review.js');
-const userRouter = require('./routes/user.js');
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 const app = express();
 const port = 3000;
 
-app.set("view engine","ejs");
-app.set("views", path.join(__dirname,"views"));
-app.use(express.urlencoded({extended: true}));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname,"/public")));
-app.engine('ejs', ejsMate);
-
+app.use(express.static(path.join(__dirname, "/public")));
+app.engine("ejs", ejsMate);
 
 //mongo part
 main()
-    .then((res)=>{
-        console.log("connected to DB");
-    })
-    .catch((err)=>{
-        console.log(err);
-    });
-
+  .then((res) => {
+    console.log("connected to DB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
-};
-
+  await mongoose.connect(MONGO_URL);
+}
 
 //express part
 //root route
-app.get('/',(req,res)=>{
-    res.send("Hi, I am root");
+app.get("/", (req, res) => {
+  res.send("Hi, I am root");
 });
 
-
 //session- a session Id will be created for each user
-app.use(session({
+app.use(
+  session({
     secret: "mySuperSecretKey",
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 7 * 24 * 60 * 60 * 1000, //keeps session for 7days
-        httpOnly: true
-    }
-}));
+      maxAge: 7 * 24 * 60 * 60 * 1000, //keeps session for 7days
+      httpOnly: true,
+    },
+  })
+);
 app.use(flash());
-     
 
 //authentication
 app.use(passport.initialize());
@@ -73,13 +73,12 @@ passport.use(new LocalStrategy(User.authenticate())); // uses the strategy from 
 passport.serializeUser(User.serializeUser()); //saves user data from session
 passport.deserializeUser(User.deserializeUser()); //removes user data from session
 
-
-app.use((req, res, next)=>{
-    //saving some info to res.locals so that we can access it on ejs files
-    res.locals.success = req.flash("success");
-    res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
-    next();
+app.use((req, res, next) => {
+  //saving some info to res.locals so that we can access it on ejs files
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  res.locals.currUser = req.user;
+  next();
 });
 
 //demo
@@ -94,30 +93,26 @@ app.use((req, res, next)=>{
 // });
 
 //listing routes
-app.use('/listing', listingRouter);
-
+app.use("/listing", listingRouter);
 
 //review routes
-app.use('/listing/:id/reviews', reviewRouter);
+app.use("/listing/:id/reviews", reviewRouter);
 
 //user routes
-app.use('/', userRouter);
-
+app.use("/", userRouter);
 
 //page not found
 app.use((req, res, next) => {
-    next(new ExpressError(404, "Page not found!"));
-  });
-
-
-//error handling middleware
-app.use((err, req, res, next)=>{
-    let {statusCode = 500, message = "something went wrong!"} = err;
-    res.status(statusCode).render('error.ejs',{message});
-    // res.status(statusCode).send(message);
+  next(new ExpressError(404, "Page not found!"));
 });
 
+//error handling middleware
+app.use((err, req, res, next) => {
+  let { statusCode = 500, message = "something went wrong!" } = err;
+  res.status(statusCode).render("error.ejs", { message });
+  // res.status(statusCode).send(message);
+});
 
-app.listen(port, ()=>{
-    console.log(`app is running at ${port}`);
+app.listen(port, () => {
+  console.log(`app is running at ${port}`);
 });
