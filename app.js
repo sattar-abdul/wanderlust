@@ -45,10 +45,11 @@ async function main() {
 }
 
 //express part
-//root route
-app.get("/", (req, res) => {
-  res.send("Hi, I am root");
-});
+
+//root route (not using '/' instead '/listing' is our root)
+// app.get("/", (req, res) => {
+//   res.send("Hi, I am root");
+// });
 
 //session- a session Id will be created for each user
 app.use(
