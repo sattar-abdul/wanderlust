@@ -1,4 +1,5 @@
 const Listing = require("../models/listing.js");
+const axios = require("axios");
 
 module.exports.index = async (req, res) => {
   let allListing = await Listing.find({});
@@ -27,11 +28,19 @@ module.exports.showListing = async (req, res) => {
 };
 
 module.exports.createListing = async (req, res) => {
+  //to get map coordinates from listing.location using maptiler
+  const location = req.body.listing.location;
+  const maptilerKey = process.env.MAPTILER_KEY;
+
+  const locUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(location)}.json?key=${maptilerKey}&limit=1`;
+  const response = await axios.get(locUrl);
+
   let url = req.file.path;
   let filename = req.file.filename;
   let newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
+  newListing.geometry = response.data.features[0].geometry;
   await newListing.save();
   req.flash("success", "New Listing Created");
   res.redirect("/listing");
