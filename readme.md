@@ -1,3 +1,5 @@
+# Before making repo public, change cloudinady api and secret key
+
 Documentation
 
 # To initilize this project with some data, Run:
@@ -10,23 +12,27 @@ Documentation
 
 app.js runs the server at localhost 3000
 
-# Description:
+## Description:
 
-## For Server side data validation I used: `joi`
+### For Server side data validation I used: `joi`
 It's a npm library used for data validation in JS. 
 
-## For authentication: 
+### For authentication: 
 `passport`, `passport-local` libraries are used using local strategy.
 
-## Framework used:
+### Framework used:
 we have used MVC (Model-View-Controller) Framework
 
-## For rating and its animation:
+### For rating and its animation:
 we used open source code: LunarLogic starability
 
-## For img upload and handling
+### For img upload and handling
 We used npm package "multer" and form of type "multipart/form-data"
 
-## For img storage
+### For img storage
 used cloud service: cloudinary along with its packages
 .env to store credentials.
+
+### For maps
+MapLibre's is used
+maptiler used for map tiles
