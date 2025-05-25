@@ -1,8 +1,8 @@
 <!-- shows details of a particulal listing  -->
 <%- layout('/layouts/boilerplate') %>
 <script>
-  window.maptilerKey = "<%= process.env.MAPTILER_KEY %>"; //key for map
-  window.coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+  const maptilerKey = "<%= process.env.MAPTILER_KEY %>"; //key for map
+  const listing = <%- JSON.stringify(listing) %>;
 </script>
 
   <div class="row">
