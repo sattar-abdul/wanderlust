@@ -16,6 +16,20 @@
         <a class="nav-link" href="/listing">Explore</a>
       </div>
       <div class="navbar-nav ms-auto">
+        <form class="d-flex" role="search">
+          <input
+            class="form-control me-2 search-input"
+            type="search"
+            placeholder="Search Destinations"
+            aria-label="Search"
+          />
+          <button class="btn search-btn" type="submit">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i
+            >&nbsp;&nbsp;Search
+          </button>
+        </form>
+      </div>
+      <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listing/new">Airbnb your home</a>
         <% if(!currUser) { %>
         <a class="nav-link" href="/signup"><b>SignUp</b></a>
