@@ -48,10 +48,10 @@ async function main() {
 
 //express part
 
-//root route (not using '/' instead '/listing' is our root)
-// app.get("/", (req, res) => {
-//   res.send("Hi, I am root");
-// });
+//root route: '/listing' is our root
+app.get("/", (req, res) => {
+  res.redirect("/listing");
+});
 
 //session- a session Id will be created for each user
 const store = MongoStore.create({
