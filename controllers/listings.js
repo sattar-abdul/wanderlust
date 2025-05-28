@@ -32,7 +32,9 @@ module.exports.createListing = async (req, res) => {
   const location = req.body.listing.location;
   const maptilerKey = process.env.MAPTILER_KEY;
 
-  const locUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(location)}.json?key=${maptilerKey}&limit=1`;
+  const locUrl = `https://api.maptiler.com/geocoding/${encodeURIComponent(
+    location
+  )}.json?key=${maptilerKey}&limit=1`;
   const response = await axios.get(locUrl);
 
   let url = req.file.path;
@@ -81,4 +83,21 @@ module.exports.destroyListing = async (req, res) => {
   await Listing.findByIdAndDelete(id);
   req.flash("success", "Listing Deleted");
   res.redirect("/listing");
+};
+
+module.exports.searchListing = async (req, res) => {
+  let query = req.query.query || "";
+  const listings = await Listing.find({
+    $or: [
+      { title: { $regex: query, $options: "i" } },
+      { country: { $regex: query, $options: "i" } },
+      { location: { $regex: query, $options: "i" } },
+      { description: { $regex: query, $options: "i" } },
+    ],
+  });
+    console.log(listings);
+  res.render("listing/search.ejs", {
+    query,
+    listings,
+  });
 };

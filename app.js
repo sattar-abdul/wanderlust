@@ -98,16 +98,6 @@ app.use((req, res, next) => {
   next();
 });
 
-//demo
-// app.use("/demouser", async (req,res) =>{
-//     let fakeuser = new User({
-//         email: "student1@gmail.com",
-//         username: "student1"
-//     });
-
-//     let registeredUser = await User.register(fakeuser, "helloworld");
-//     res.send(registeredUser);
-// });
 
 //listing routes
 app.use("/listing", listingRouter);
