@@ -46,13 +46,6 @@ async function main() {
   await mongoose.connect(dbUrl);
 }
 
-//express part
-
-//root route: '/listing' is our root
-app.get("/", (req, res) => {
-  res.redirect("/listing");
-});
-
 //session- a session Id will be created for each user
 const store = MongoStore.create({
   mongoUrl: dbUrl,
@@ -98,6 +91,12 @@ app.use((req, res, next) => {
   next();
 });
 
+//express part
+
+//'/listing' is our root
+app.get("/", (req, res) => {
+  res.redirect("/listing");
+});
 
 //listing routes
 app.use("/listing", listingRouter);

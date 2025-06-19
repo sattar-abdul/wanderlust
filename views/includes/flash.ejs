@@ -1,5 +1,5 @@
 <!-- flash msg for success -->
-<% if(success && success.length){ %>
+<% if(typeof success !== 'undefined' && success.length){ %>
     <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert"> 
         <%= success %> 
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -7,7 +7,7 @@
 <% } %>
 
 <!-- flash msg for error -->
-<% if(error && error.length){ %>
+<% if(typeof erro !== 'undefined' && error.length){ %>
     <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert"> 
         <%= error %> 
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>

@@ -1,26 +1,28 @@
 <%- layout('layouts/boilerplate.ejs') %>
 
 <div class="row">
-    <div class="col-6 offset-3">
-        <br>
-        <h3>Create Your Account</h3>
-        <hr>
-        <br>
-        <form method="POST" action="/signup" class="needs-validation" novalidate>
-            <div class="mb-3">
-                <label class="form-label" for="username"> Username </label>
-                <input class="form-control" name="username" type="text" required>
-                <div class="valid-feedback">Looks good!</div>
-                <div class="invalid-feedback">Please provide a username</div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="email"> Email </label>
-                <input class="form-control" name="email" type="email" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="password"> Password </label>
-                <input class="form-control" name="password" type="password" required>
-            </div>
-            <button class="btn btn-success">SignUp</button>
-            <br><br>
-        </form>
+  <div class="col-6 offset-3">
+    <br />
+    <h3>Create Your Account</h3>
+    <hr />
+    <br />
+    <form method="POST" action="/signup" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label class="form-label" for="username"> Username </label>
+        <input class="form-control" name="username" type="text" required />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">Please provide a username</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="email"> Email </label>
+        <input class="form-control" name="email" type="email" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label" for="password"> Password </label>
+        <input class="form-control" name="password" type="password" required />
+      </div>
+      <button class="btn btn-success">SignUp</button>
+      <br /><br />
+    </form>
+  </div>
+</div>
