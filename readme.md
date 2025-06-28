@@ -1,8 +1,6 @@
-# Before making repo public, change cloudinady api and secret key
+# Documentation
 
-Documentation
-
-# To initilize this project with some data, Run:
+## To initilize this project with some data, Run:
 1. /init/index.js
 2. /init/initReview.js (needs to update)
 
