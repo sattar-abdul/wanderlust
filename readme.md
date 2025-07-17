@@ -1,16 +1,10 @@
-# Before making repo public, change cloudinady api and secret key
+# Documentation
 
-Documentation
-
-# To initilize this project with some data, Run:
+## To initilize this project with some data, Run:
 1. /init/index.js
 2. /init/initReview.js (needs to update)
 
-# Already existing user (for testing):
-1. username: student2 pass: hello
-2. username: student4 pass: hello
-
-app.js runs the server at localhost 3000
+To run the app locally, use command: `app.js`
 
 ## Description:
 
