@@ -43,7 +43,11 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(dbUrl);
+  await mongoose.connect(dbUrl, {
+    ssl: true,
+    tlsAllowInvalidCertificates: true,
+    serverSelectionTimeoutMS: 5000,
+  });
 }
 
 //session- a session Id will be created for each user
